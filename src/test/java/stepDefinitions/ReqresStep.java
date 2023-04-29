@@ -3,18 +3,27 @@ package stepDefinitions;
 
 
 import hooks.HooksAPI;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import io.restassured.response.ResponseBody;
+import netscape.javascript.JSObject;
 import org.junit.Assert;
+import pojos.PojoReqres;
+import pojos.PojoReqresRegister;
 import utilities.ConfigReader;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ReqresStep {
     public static String fullPath;
+
+    public static PojoReqres requestBody;
 
 
     @Given("Api kullanicisi {string} path parametrelerini set eder")
@@ -72,4 +81,43 @@ public class ReqresStep {
     }
 
 
+    @Then("Kullanici yeni bir obje olusturur")
+    public void kullaniciYeniBirObjeOlusturur() {
+          requestBody=new PojoReqres("Gabriel","Avukat");
+
+
+    }
+
+    @And("Donen Responsun id degerinin {int} den buyuk ve status code degerinin {int}  oldugunu test eder")
+    public void donenResponsunIdDegerininDenBuyukVeStatusCodeDegerininOldugunuTestEder(int arg0, int arg1) {
+        Response response=given().spec(HooksAPI.spec).contentType(ContentType.JSON).when().body(requestBody).post(fullPath);
+
+        response.prettyPrint();
+
+        JsonPath resJspath=response.jsonPath();
+
+        assertEquals(201,response.getStatusCode());
+        assertTrue(Integer.parseInt(resJspath.getString("id"))>500);
+
+    }
+
+
+    @Then("Register isleminin baasarili oldugunu ve donen Token degerinin   onyedi  ve uzeri basakmaktan olustugunu test eder")
+    public void registerIslemininBaasariliOldugunuVeDonenTokenDegerininOnyediVeUzeriBasakmaktanOlustugunuTestEder() {
+        PojoReqresRegister regBody=new PojoReqresRegister("havalarGuzel@abcmail.com","ahmet123456");
+
+        Response response=given().spec(HooksAPI.spec).contentType(ContentType.JSON).when().body(regBody).post(fullPath);
+
+        JsonPath resJsonPath= response.jsonPath();
+
+
+
+
+        assertTrue(((resJsonPath.getString("token").length())>=17));
+
+        assertEquals(200,response.getStatusCode());
+
+
+
+    }
 }
