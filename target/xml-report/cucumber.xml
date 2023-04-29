@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="2.712">
-    <testcase classname="Reqres isimli sayfanin Api testlerinin yapilmasi" name="https://reqres.in/api/unknown adresine  get request gonderip ve donen   &quot;text&quot; degerinin :&quot;To keep ReqRes free, contributions towards server costs are appreciated!&quot; oldugunu test edin" time="2.533">
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="3.74">
+    <testcase classname="Reqres isimli sayfanin Api testlerinin yapilmasi" name="coklu assertion yapmak uzere  https://reqres.in/api/unknown/2 adresine get request gonderilir" time="3.469">
         <system-out>
-            <![CDATA[Given Api kullanicisi "api/unknown" path parametrelerini set eder...........passed
-Then Donen Responsun text degerinin "istenilenDeger" oldugunu test eder.....passed
+            <![CDATA[Given Api kullanicisi "api/unknown/2" path parametrelerini set eder.........passed
+Then Donen response "2" "fuchsia rose" 2001 "#C74375"  "17-2031" "https://reqres.in/#support-heading" istenilen testleri.passed
 ]]>
         </system-out>
     </testcase>
